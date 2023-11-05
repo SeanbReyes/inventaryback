@@ -1,0 +1,15 @@
+let exp = require('express')
+let app = exp()
+let morgan = require('morgan')
+let cors = require('cors')
+
+app.use(morgan('dev'))
+app.use(exp.json())
+app.use(cors())
+app.use(require('./routes/articulos'))
+app.use(require('./routes/unidades'))
+app.use(require('./routes/compra'))
+app.use(require('./routes/ventas'))
+
+app.listen(3000)
+console.log(`Server on Port 3000`)
