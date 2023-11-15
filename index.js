@@ -12,4 +12,4 @@ app.use(require('./routes/compra'))
 app.use(require('./routes/ventas'))
 
 app.listen(3000)
-console.log(`Server on Port 3000`)
+console.log(`Server on Port 3000 YES`)
