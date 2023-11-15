@@ -21,16 +21,14 @@ model Unidades {
   id                      Int       @id @default(autoincrement())
   id_articulo             Int
   precio_de_compra        Int
-  precio_de_venta         Int?
   numero_de_factura       Int
   numero_de_factura_venta Int?
-  fecha_de_creacion       DateTime  @default(now())
+  fecha_de_creacion       String  
   fecha_de_modificacion   DateTime? @updatedAt
-  fecha_de_venta          DateTime?
+  fecha_de_venta          String?
   vendido                 Boolean?  @default(false)
   cliente_compra          String
   cliente_venta           String?
-  ganancia                Int?      @default(0)
 }
 
 model Factura_Venta {
@@ -40,7 +38,7 @@ model Factura_Venta {
   ganancia    Int
   precio      Int
   cliente     String
-  fecha       DateTime @default(now())
+  fecha       String 
 }
 
 model Factura_Compra {
@@ -49,5 +47,5 @@ model Factura_Compra {
   num_factura Int
   products_id String
   costo       Int
-  fecha       DateTime @default(now())
+  fecha       String 
 }

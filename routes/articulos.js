@@ -12,7 +12,7 @@ router.get('/arts',async(req,res)=>{
     
     for(let x of articulos){
         x.disponibles = await prisma.unidades.count({
-            where:{id_articulo:parseInt(x.id)}
+            where:{id_articulo:parseInt(x.id),vendido:false}
         })
 
     }

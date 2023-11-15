@@ -19,6 +19,7 @@ router.post('/compra',async(req,res)=>{
     let model_names = req.body.names
     let unidades = req.body.unidades
     let unidades_id = ''
+    console.log(model_names)
     for(let x of model_names){
         await prisma.articulo.upsert({
             where:{name:x},
@@ -36,7 +37,8 @@ router.post('/compra',async(req,res)=>{
                 id_articulo : art_id,
                 precio_de_compra : x.precio_de_compra,
                 numero_de_factura : req.body.no_factura,
-                cliente_compra : req.body.proveedor
+                cliente_compra : req.body.proveedor,
+                fecha_de_creacion : req.body.fecha
             }
             let unid = await prisma.unidades.create({
                 data
@@ -52,7 +54,8 @@ router.post('/compra',async(req,res)=>{
             proveedor:req.body.proveedor,
             num_factura:req.body.no_factura,
             products_id:unidades_id,
-            costo:req.body.costo
+            costo:req.body.costo,
+            fecha:req.body.fecha
         }
     })
 
@@ -90,10 +93,24 @@ router.get('/compra/:id',async(req,res)=>{
 })
 
 router.put('/compra/:id',async(req,res)=>{
+    req.body.num_factura = parseInt(req.body.num_factura)
+    let unis = await prisma.unidades.findMany({
+        where:{numero_de_factura:parseInt(req.params['id'])},
+        select:{numero_de_factura:true,cliente_compra:true,id:true}
+    })
+    for(let x of unis){
+        await prisma.unidades.update({
+            where:{id:x.id},
+            data:{
+                numero_de_factura:parseInt(req.body.num_factura),
+                cliente_compra:req.body.proveedor
+            }
+        })
+    }
     return res.json({
         compra: await prisma.factura_Compra.update({
             where:{id:parseInt(req.params['id'])},
-            data:req.body.data
+            data:req.body
         })
     })
 })
