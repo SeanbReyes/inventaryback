@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "npx prisma migrate dev && nodemon index.js"
   },
   "author": "",
   "license": "ISC",
